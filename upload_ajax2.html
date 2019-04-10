@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form id="f" action="http://127.0.0.1:3000/upload" method="post" enctype="multipart/form-data">
+        <div>
+            <input type="file" name="file">
+        </div>        
+        <div>
+            <input type="submit">
+        </div>
+    </form>
+    <img id="img" src="" alt="">
+<script>
+f.addEventListener('submit',(e)=>{
+    e.preventDefault()
+
+    var formData = new FormData();
+    // 古老方式获取 文件
+    // formData.append('file',f.file.files[0])
+
+    var fileInput = document.querySelector('input[name="file"]')
+    formData.append('file',fileInput.files[0])
+
+    xhr = new XMLHttpRequest()
+    xhr.open('POST',f.action)
+    xhr.onload = function(){
+        console.log(xhr.response)
+        img.src = `http://127.0.0.1:3000/preview/${xhr.response}`
+    }
+    xhr.send(formData)
+})
+</script>
+</body>
+</html>
